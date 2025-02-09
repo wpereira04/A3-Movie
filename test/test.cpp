@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////
+//
+// ECE 3574, A3, Walter Pereira Cruz
+// File name: test.cpp
+// Description: Contains the tests for the movie and movie_factory
+//				functions or class.
+//				
+// Date:        02/09/2025
+//
 
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
@@ -5,7 +14,7 @@
 
 TEST_CASE("Testing Movie project methods") {
 	Movie movie1("Foo", "Terry", 35, 78, 8.5);
-	Movie movie2("Foo 2", "Terrance", 35, 24, 3); // ids can be negative? or at least they aren't said to not be.
+	Movie movie2("Foo 2", "Terrance", 35, 24, 3);
 	SECTION("Testing invalid Movie declarations") {
 		// tests runtime invalid
 		REQUIRE_THROWS_AS(Movie("Foo 3", "Tom", -5, 24, 3), std::invalid_argument);
@@ -17,6 +26,7 @@ TEST_CASE("Testing Movie project methods") {
 		REQUIRE_THROWS_AS(Movie("Foo 3", "Tom", 35, 24, 11), std::invalid_argument);
 	}
 	SECTION("Testing movie methods") {
+		// tests all get methods with two movies
 		REQUIRE(movie1.GetTitle() == "Foo");
 		REQUIRE(movie1.GetDirector() == "Terry");
 		REQUIRE(movie1.GetRuntime() == 35);
@@ -40,6 +50,7 @@ TEST_CASE("Testing Movie project methods") {
 		std::vector<int> idsW{ 1, 2, 3, 4};
 		std::vector<double> ratings{ 9.1, 5.2, 8.9, 5.8, 9.9 };
 		std::vector<double> ratingsW{ 9.1, 5.2, 8.9, 5.8};
+		// valid input
 		std::vector<Movie*> som = CreateMovies(titles, directors, runtimes, ids, ratings);
 		for (std::size_t i = 0; i < titles.size(); i++) {
 			REQUIRE(som[i]->GetTitle() == titles[i]);
@@ -47,7 +58,7 @@ TEST_CASE("Testing Movie project methods") {
 			REQUIRE(som[i]->GetRuntime() == runtimes[i]);
 			REQUIRE(som[i]->GetRating() == ratings[i]);
 		}
-
+		// invalid inputs for each of the inputs
 		REQUIRE_THROWS(CreateMovies(titlesW, directors, runtimes, ids, ratings));
 		REQUIRE_THROWS(CreateMovies(titles, directorsW, runtimes, ids, ratings));
 		REQUIRE_THROWS(CreateMovies(titles, directors, runtimesW, ids, ratings));
